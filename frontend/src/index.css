@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  border-radius: 0px !important;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #F5F2EB;
+  color: #1A1A2E;
+  font-family: 'DM Sans', sans-serif;
+}
+input, button, textarea {
+  outline: none;
+}
