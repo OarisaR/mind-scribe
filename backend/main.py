@@ -17,9 +17,8 @@ load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 client = OpenAI(api_key=OPENAI_API_KEY)
 
-# ── Firebase Admin init ──
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-cred = credentials.Certificate(os.path.join(BASE_DIR, "service-account.json"))
+service_account_info = json.loads(os.getenv("FIREBASE_SERVICE_ACCOUNT"))
+cred = credentials.Certificate(service_account_info)
 firebase_admin.initialize_app(cred)
 
 limiter = Limiter(key_func=get_remote_address)
