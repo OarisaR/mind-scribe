@@ -1,30 +1,51 @@
+<div align="center">
+
 # MindScribe
 
-Transform dense text into interactive, AI-powered mind maps.
+**Transform dense text into interactive, AI-powered mind maps.**
 
-MindScribe helps students and lifelong learners understand complex study material by converting plain text into structured visual mind maps. Instead of reading long walls of text, users can explore concepts visually, understand relationships between ideas, test their knowledge, and track learning progress — all in one place.
+Transform your lecture notes, research papers, and textbook chapters into visual concept maps you can explore, quiz yourself on, and track your understanding of — all in one place.
+
+[![React](https://img.shields.io/badge/React_19-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev)
+[![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
+[![Python](https://img.shields.io/badge/Python_3.11-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org)
+[![OpenAI](https://img.shields.io/badge/OpenAI-412991?style=for-the-badge&logo=openai&logoColor=white)](https://openai.com)
+[![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)](https://firebase.google.com)
+[![Firestore](https://img.shields.io/badge/Firestore-FF6F00?style=for-the-badge&logo=firebase&logoColor=white)](https://firebase.google.com/products/firestore)
+
+**[Live Demo](https://mindscribe-2026o.web.app)** · **[Report a Bug](https://github.com/yourusername/MindScribe/issues)**
+
+</div>
+
+---
+
+## Preview
+
+![MindScribe Mind Map](https://i.imgur.com/tbDWz8U.png)
 
 ---
 
 ## Features
 
 **AI Mind Map Generation**
-Convert lecture notes, articles, research papers, or any block of text into a structured visual mind map.
+Paste any block of text and get a structured visual concept map in seconds, powered by GPT-4o-mini.
 
 **Concept Explanations**
-Click any node to receive an AI-generated explanation grounded in the original context.
+Click any node to receive an AI-generated explanation grounded in the original text.
 
 **Relationship Analysis**
-Understand how a child concept connects to its parent concept within the map.
+Select two nodes to understand how those concepts connect and depend on each other.
 
 **Quiz Generation**
 Generate multiple-choice questions for any concept and receive instant feedback.
 
-**Learning Progress Tracking**
-Track visited concepts with a visual progress indicator and persistent learning history.
-
 **Comprehension Ratings**
-Mark each concept as understood, fuzzy, or not yet grasped. Ratings are color-coded on the mind map and saved automatically.
+Mark each concept as understood, fuzzy, or not yet grasped. Ratings are colour-coded on the map and saved automatically.
+
+**Learning Progress Tracking**
+Track visited concepts with a visual progress indicator and persistent history across sessions.
 
 **Persistent Storage**
 Mind maps, visited nodes, and comprehension ratings are stored securely in Cloud Firestore.
@@ -33,35 +54,38 @@ Mind maps, visited nodes, and comprehension ratings are stored securely in Cloud
 Download your completed mind map as an image.
 
 **Authentication**
-Supports Google Sign-In and email/password authentication via Firebase.
+Google Sign-In and email/password authentication via Firebase.
 
 ---
 
 ## How It Works
 
-1. Paste your study material (up to 5,000 characters).
-2. The AI extracts and structures key concepts.
-3. An interactive mind map is generated.
-4. Explore concepts by clicking nodes.
-5. Deepen understanding with AI explanations and relationship analysis.
-6. Test yourself with AI-generated quizzes.
-7. Track comprehension visually across the map.
-8. Export your completed mind map as a PNG.
+```
+Paste text  →  AI extracts concepts  →  Interactive mind map
+     ↓                                         ↓
+  Up to 5,000 characters            Click nodes to explore
+                                         ↓
+                              Explain · Relate · Quiz
+                                         ↓
+                              Progress saved to Firestore
+```
 
 ---
 
 ## Tech Stack
 
-| Layer          | Technology                    |
-| -------------- | ----------------------------- |
-| Frontend       | React 19 + TypeScript + Vite  |
-| Visualization  | React Flow (@xyflow/react)    |
-| Backend        | FastAPI + Python 3.11         |
-| AI             | OpenAI GPT-4o-mini            |
-| Authentication | Firebase Authentication       |
-| Database       | Cloud Firestore               |
-| Rate Limiting  | SlowAPI                       |
-| Export         | html-to-image                 |
+| Layer          | Technology                          |
+| -------------- | ----------------------------------- |
+| Frontend       | React 19 + TypeScript + Vite        |
+| Visualization  | React Flow (@xyflow/react)          |
+| Backend        | FastAPI + Python 3.11               |
+| AI             | OpenAI GPT-4o-mini                  |
+| Authentication | Firebase Authentication             |
+| Database       | Cloud Firestore                     |
+| Rate Limiting  | SlowAPI                             |
+| Export         | html-to-image                       |
+| Frontend Host  | Firebase Hosting                    |
+| Backend Host   | Render                              |
 
 ---
 
@@ -87,16 +111,16 @@ Supports Google Sign-In and email/password authentication via Firebase.
        +---------------+             +---------------+
                                              |
                                              v
-                                     +---------------+
-                                     | Cloud Firestore|
-                                     +---------------+
+                                     +----------------+
+                                     | Cloud Firestore |
+                                     +----------------+
 ```
 
 ---
 
 ## API Endpoints
 
-All endpoints require a Firebase ID token passed as a Bearer token in the Authorization header.
+All endpoints require `Authorization: Bearer <firebase_id_token>`.
 
 | Method | Endpoint            | Description                    | Rate Limit |
 | ------ | ------------------- | ------------------------------ | ---------- |
@@ -182,22 +206,22 @@ npm run dev
 
 ### Backend
 
-| Variable                   | Description                        |
-| -------------------------- | ---------------------------------- |
-| `OPENAI_API_KEY`           | OpenAI API key                     |
-| `FIREBASE_SERVICE_ACCOUNT` | Firebase service account JSON      |
+| Variable                   | Description                   |
+| -------------------------- | ----------------------------- |
+| `OPENAI_API_KEY`           | OpenAI API key                |
+| `FIREBASE_SERVICE_ACCOUNT` | Firebase service account JSON |
 
 ### Frontend
 
-| Variable                          | Description              |
-| --------------------------------- | ------------------------ |
-| `VITE_API_URL`                    | Backend URL              |
-| `VITE_FIREBASE_API_KEY`           | Firebase API key         |
-| `VITE_FIREBASE_AUTH_DOMAIN`       | Firebase auth domain     |
-| `VITE_FIREBASE_PROJECT_ID`        | Firebase project ID      |
-| `VITE_FIREBASE_STORAGE_BUCKET`    | Firebase storage bucket  |
-| `VITE_FIREBASE_MESSAGING_SENDER_ID` | Firebase messaging sender ID |
-| `VITE_FIREBASE_APP_ID`            | Firebase app ID          |
+| Variable                             | Description                  |
+| ------------------------------------ | ---------------------------- |
+| `VITE_API_URL`                       | Backend URL                  |
+| `VITE_FIREBASE_API_KEY`              | Firebase API key             |
+| `VITE_FIREBASE_AUTH_DOMAIN`          | Firebase auth domain         |
+| `VITE_FIREBASE_PROJECT_ID`           | Firebase project ID          |
+| `VITE_FIREBASE_STORAGE_BUCKET`       | Firebase storage bucket      |
+| `VITE_FIREBASE_MESSAGING_SENDER_ID`  | Firebase messaging sender ID |
+| `VITE_FIREBASE_APP_ID`               | Firebase app ID              |
 
 ---
 
@@ -208,30 +232,24 @@ MindScribe
 ├── backend
 │   ├── main.py
 │   ├── requirements.txt
+│   ├── Procfile
 │   └── .env
 └── frontend
     ├── src
     │   ├── components
+    │   │   ├── AuthPage.tsx
+    │   │   ├── InputPage.tsx
+    │   │   ├── MindMapPage.tsx
+    │   │   ├── NodePanel.tsx
+    │   │   └── PasswordGate.tsx
     │   ├── hooks
+    │   │   └── useMaps.ts
     │   ├── firebase.ts
-    │   └── App.tsx
+    │   ├── App.tsx
+    │   └── main.tsx
     ├── package.json
     └── .env
 ```
-
----
-
-## Design
-
-| Purpose    | Value     |
-| ---------- | --------- |
-| Background | `#F5F2EB` |
-| Primary    | `#1A1A2E` |
-| Accent     | `#E8531D` |
-| Surface    | `#FFFFFF` |
-| Success    | `#4ADE80` |
-
-Typography: **Space Grotesk** for headings, **DM Sans** for body text. The UI follows a brutalist aesthetic with hard borders and offset shadows.
 
 ---
 
@@ -239,8 +257,6 @@ Typography: **Space Grotesk** for headings, **DM Sans** for body text. The UI fo
 
 - PDF upload with automatic text extraction
 - AI-generated study summaries
-- Focus mode for distraction-free learning
-- Revision list for difficult concepts
 - Flashcard export (Anki-compatible)
 - Collaborative mind maps
 - Mobile application
@@ -249,5 +265,16 @@ Typography: **Space Grotesk** for headings, **DM Sans** for body text. The UI fo
 
 ## Contributing
 
-Contributions, feature suggestions, and bug reports are welcome. To contribute, fork the repository, create a new branch, commit your changes, and open a pull request.
+Contributions, feature suggestions, and bug reports are welcome. Fork the repository, create a new branch, commit your changes, and open a pull request.
 
+---
+
+## License
+
+This project is licensed under the MIT License.
+
+---
+
+<div align="center">
+Built to make learning more visual, interactive, and engaging.
+</div>
