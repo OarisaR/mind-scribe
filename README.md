@@ -15,7 +15,7 @@ Transform your lecture notes, research papers, and textbook chapters into visual
 [![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)](https://firebase.google.com)
 [![Firestore](https://img.shields.io/badge/Firestore-FF6F00?style=for-the-badge&logo=firebase&logoColor=white)](https://firebase.google.com/products/firestore)
 
-**[Live Demo](https://mindscribe-2026o.web.app)** · **[Report a Bug](https://github.com/yourusername/MindScribe/issues)**
+**[Live Demo](https://mindscribe-2026o.web.app)** 
 
 </div>
 
