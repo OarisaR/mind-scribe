@@ -29,32 +29,21 @@ Transform your lecture notes, research papers, and textbook chapters into visual
 
 ## Features
 
-**AI Mind Map Generation**
-Paste any block of text and get a structured visual concept map in seconds, powered by GPT-4o-mini.
+![AI Mind Maps](https://img.shields.io/badge/AI_Mind_Maps-412991?style=flat-square&logo=openai&logoColor=white) Paste any block of text and get a structured visual concept map in seconds.
 
-**Concept Explanations**
-Click any node to receive an AI-generated explanation grounded in the original text.
+![Concept Explanations](https://img.shields.io/badge/Concept_Explanations-4285F4?style=flat-square&logo=googledocs&logoColor=white) Click any node for an AI-generated explanation grounded in the original text.
 
-**Relationship Analysis**
-Select two nodes to understand how those concepts connect and depend on each other.
+![Relationship Analysis](https://img.shields.io/badge/Relationship_Analysis-0F9D58?style=flat-square&logo=googlescholar&logoColor=white) Select two nodes to understand exactly how those concepts connect.
 
-**Quiz Generation**
-Generate multiple-choice questions for any concept and receive instant feedback.
+![Quiz Generation](https://img.shields.io/badge/Quiz_Generation-F4B400?style=flat-square&logo=googleforms&logoColor=white) Generate multiple-choice questions for any concept and get instant feedback.
 
-**Comprehension Ratings**
-Mark each concept as understood, fuzzy, or not yet grasped. Ratings are colour-coded on the map and saved automatically.
+![Comprehension Ratings](https://img.shields.io/badge/Comprehension_Ratings-DB4437?style=flat-square&logo=target&logoColor=white) Mark concepts as understood, fuzzy, or lost — colour-coded directly on the map.
 
-**Learning Progress Tracking**
-Track visited concepts with a visual progress indicator and persistent history across sessions.
+![Progress Tracking](https://img.shields.io/badge/Progress_Tracking-00ACC1?style=flat-square&logo=googleanalytics&logoColor=white) Visited nodes and ratings persist across sessions via Cloud Firestore.
 
-**Persistent Storage**
-Mind maps, visited nodes, and comprehension ratings are stored securely in Cloud Firestore.
+![Export as PNG](https://img.shields.io/badge/Export_as_PNG-546E7A?style=flat-square&logo=image&logoColor=white) Download your completed mind map as an image with one click.
 
-**Export as PNG**
-Download your completed mind map as an image.
-
-**Authentication**
-Google Sign-In and email/password authentication via Firebase.
+![Authentication](https://img.shields.io/badge/Authentication-FFCA28?style=flat-square&logo=firebase&logoColor=black) Google Sign-In and email/password auth via Firebase.
 
 ---
 
