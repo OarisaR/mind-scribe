@@ -7,6 +7,7 @@ import {
   where,
   onSnapshot,
   serverTimestamp,
+  updateDoc,
 } from 'firebase/firestore'
 import { useEffect, useState } from 'react'
 import { db } from '../firebase'
@@ -18,6 +19,8 @@ export interface SavedMap {
   data: MindMapData
   originalText: string
   createdAt: string
+  visitedIds?: string[]
+  ratings?: Record<string, string>
 }
 
 export function useMaps(uid: string | null) {
@@ -31,24 +34,24 @@ export function useMaps(uid: string | null) {
       return
     }
 
-    // Real-time listener — updates automatically when Firestore changes
     const q = query(
       collection(db, 'maps'),
       where('uid', '==', uid),
-    //   orderBy('createdAt', 'desc')
     )
 
     const unsub = onSnapshot(q, snapshot => {
       const loaded: SavedMap[] = snapshot.docs.map(d => {
-      const data = d.data()
+        const data = d.data()
         return {
-            id: d.id,
-            title: data.title,
-            data: data.data,
-            originalText: data.originalText,
-            createdAt: data.createdAt?.toDate?.()?.toISOString() ?? new Date().toISOString(),
+          id: d.id,
+          title: data.title,
+          data: data.data,
+          originalText: data.originalText,
+          createdAt: data.createdAt?.toDate?.()?.toISOString() ?? new Date().toISOString(),
+          visitedIds: data.visitedIds ?? [],
+          ratings: data.ratings ?? {},
         }
-        }).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+      }).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
       setMaps(loaded)
       setLoading(false)
     })
@@ -56,21 +59,40 @@ export function useMaps(uid: string | null) {
     return () => unsub()
   }, [uid])
 
-  const saveMap = async (data: MindMapData, originalText: string) => {
+  const saveMap = async (
+    data: MindMapData,
+    originalText: string,
+    visitedIds?: string[],
+    ratings?: Record<string, string>
+  ) => {
     if (!uid) return null
     const ref = await addDoc(collection(db, 'maps'), {
       uid,
       title: data.title,
       data,
       originalText,
+      visitedIds: visitedIds ?? [],
+      ratings: ratings ?? {},
       createdAt: serverTimestamp(),
     })
     return ref.id
+  }
+
+  const updateMapProgress = async (
+    id: string,
+    visitedIds: string[],
+    ratings: Record<string, string>
+  ) => {
+    if (!uid) return
+    await updateDoc(doc(db, 'maps', id), {
+      visitedIds,
+      ratings,
+    })
   }
 
   const deleteMap = async (id: string) => {
     await deleteDoc(doc(db, 'maps', id))
   }
 
-  return { maps, loading, saveMap, deleteMap }
+  return { maps, loading, saveMap, updateMapProgress, deleteMap }
 }

@@ -4,7 +4,6 @@ import type { MindMapData } from '../App'
 import { auth } from '../firebase'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
-// const APP_SECRET = 'mindscribe2026'
 
 const C = {
   bg: '#F5F2EB',
@@ -36,8 +35,8 @@ export default function InputPage({ onGenerate, onBack }: Props) {
       setError('Please paste at least a paragraph of text.')
       return
     }
-    if (text.length > 3000) {
-      setError('Text too long. Max 3000 characters.')
+    if (text.length > 5000) {
+      setError('Text too long. Max 5000 characters.')
       return
     }
     setLoading(true)
@@ -46,7 +45,7 @@ export default function InputPage({ onGenerate, onBack }: Props) {
       const response = await axios.post(
         `${API_URL}/generate-mindmap`,
         { text },
-        { headers: { Authorization: `Bearer ${await auth.currentUser?.getIdToken()}` }  }
+        { headers: { Authorization: `Bearer ${await auth.currentUser?.getIdToken()}` } }
       )
       onGenerate(response.data, text)
     } catch (err: any) {
@@ -63,8 +62,22 @@ export default function InputPage({ onGenerate, onBack }: Props) {
       fontFamily: C.fontBody,
       display: 'flex',
       flexDirection: 'column',
+      position: 'relative',
+      overflow: 'hidden',
     }}>
-      {/* Clean Navbar */}
+            {/* ── DOT BACKGROUND ── */}
+      <div style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: 0,
+        pointerEvents: 'none',
+        backgroundImage: `radial-gradient(circle, rgba(26,26,46,0.22) 2px, transparent 2px)`,
+        backgroundSize: '32px 32px',
+      }} />
+
+      
+
+      {/* ── NAVBAR ── */}
       <div style={{
         borderBottom: C.border,
         backgroundColor: C.primary,
@@ -133,18 +146,35 @@ export default function InputPage({ onGenerate, onBack }: Props) {
         </div>
       </div>
 
-      <div style={{ maxWidth: '860px', margin: '0 auto', width: '100%', padding: '0 40px' }}>
+      {/* ── MAIN CONTENT ── */}
+      <div style={{
+        position: 'relative',
+        zIndex: 1,
+        maxWidth: '860px',
+        margin: '0 auto',
+        width: '100%',
+        padding: '0 40px',
+      }}>
 
         {/* Header */}
-        <div style={{ padding: '48px 0 32px' }}>
+        <div style={{ padding: '56px 0 36px' }}>
           <div style={{
-            display: 'inline-block',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
             backgroundColor: C.accent,
             border: C.border,
             boxShadow: C.shadowSm,
-            padding: '4px 14px',
+            padding: '5px 14px',
             marginBottom: '20px',
           }}>
+            <span style={{
+              width: '6px',
+              height: '6px',
+              backgroundColor: '#fff',
+              border: '1px solid #000',
+              display: 'inline-block',
+            }} />
             <span style={{
               fontFamily: C.fontDisplay,
               fontWeight: 700,
@@ -152,17 +182,17 @@ export default function InputPage({ onGenerate, onBack }: Props) {
               color: '#fff',
               letterSpacing: '1.5px',
               textTransform: 'uppercase',
-            }}>✦ Text to Mindmap</span>
+            }}>Text to Mindmap</span>
           </div>
 
           <h1 style={{
             fontFamily: C.fontDisplay,
             fontWeight: 800,
-            fontSize: '42px',
+            fontSize: '52px',
             color: C.primary,
-            lineHeight: 1.05,
-            letterSpacing: '-1.5px',
-            marginBottom: '12px',
+            lineHeight: 1.0,
+            letterSpacing: '-2.5px',
+            marginBottom: '14px',
           }}>
             New Mindmap
           </h1>
@@ -171,7 +201,7 @@ export default function InputPage({ onGenerate, onBack }: Props) {
             fontSize: '16px',
             color: C.primary,
             opacity: 0.45,
-            lineHeight: 1.6,
+            lineHeight: 1.7,
             maxWidth: '520px',
           }}>
             Paste any wall of text — lecture notes, articles, research papers —
@@ -186,7 +216,21 @@ export default function InputPage({ onGenerate, onBack }: Props) {
           boxShadow: C.shadowLg,
           padding: '32px',
           marginBottom: '16px',
+          position: 'relative',
         }}>
+          {/* Corner accent */}
+          <div style={{
+            position: 'absolute',
+            top: -2,
+            right: -2,
+            width: '32px',
+            height: '32px',
+            backgroundColor: C.accent,
+            borderLeft: C.border,
+            borderBottom: C.border,
+            boxShadow: '-3px 3px 0px rgba(0,0,0,0.15)',
+          }} />
+
           <div style={{
             display: 'flex',
             justifyContent: 'space-between',
@@ -212,12 +256,12 @@ export default function InputPage({ onGenerate, onBack }: Props) {
             <div style={{
               fontFamily: 'monospace',
               fontSize: '12px',
-              color: text.length > 2800 ? C.accent : C.primary,
-              opacity: text.length > 2800 ? 1 : 0.3,
-              fontWeight: text.length > 2800 ? 700 : 400,
+              color: text.length > 4000 ? C.accent : C.primary,
+              opacity: text.length > 4000 ? 1 : 0.3,
+              fontWeight: text.length > 4000 ? 700 : 400,
               transition: 'all 0.2s',
             }}>
-              {text.length} / 3000
+              {text.length} / 5000
             </div>
           </div>
 
@@ -226,7 +270,7 @@ export default function InputPage({ onGenerate, onBack }: Props) {
             placeholder="Paste your lecture notes, article, or any wall of text here..."
             value={text}
             onChange={e => setText(e.target.value)}
-            maxLength={3000}
+            maxLength={5000}
             style={{
               border: C.border,
               backgroundColor: C.bg,
@@ -240,7 +284,14 @@ export default function InputPage({ onGenerate, onBack }: Props) {
               lineHeight: 1.7,
               boxSizing: 'border-box',
               display: 'block',
+              transition: 'box-shadow 0.15s ease',
             } as React.CSSProperties}
+            onFocus={e => {
+              e.currentTarget.style.boxShadow = '4px 4px 0px #000'
+            }}
+            onBlur={e => {
+              e.currentTarget.style.boxShadow = 'none'
+            }}
           />
         </div>
 
@@ -283,6 +334,7 @@ export default function InputPage({ onGenerate, onBack }: Props) {
             transition: 'all 0.1s ease',
             letterSpacing: '0.3px',
             marginBottom: '48px',
+            position: 'relative',
           } as React.CSSProperties}
         >
           {loading ? '⚙  Generating your mindmap...' : 'Generate Mindmap →'}
@@ -296,7 +348,7 @@ export default function InputPage({ onGenerate, onBack }: Props) {
           paddingBottom: '64px',
         }}>
           {[
-            { step: '01', title: 'Paste Text', desc: 'Any lecture notes, article, or excerpt up to 3000 characters' },
+            { step: '01', title: 'Paste Text', desc: 'Any lecture notes, article, or excerpt up to 5000 characters' },
             { step: '02', title: 'AI Extracts', desc: 'Key concepts and relationships identified instantly' },
             { step: '03', title: 'Explore Map', desc: 'Click any node to get a deeper AI-powered explanation' },
           ].map(item => (
@@ -305,7 +357,18 @@ export default function InputPage({ onGenerate, onBack }: Props) {
               border: C.border,
               boxShadow: C.shadow,
               padding: '28px 24px',
-            }}>
+              position: 'relative',
+              transition: 'all 0.15s ease',
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.transform = 'translate(2px, 2px)'
+              e.currentTarget.style.boxShadow = C.shadowSm
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.transform = 'none'
+              e.currentTarget.style.boxShadow = C.shadow
+            }}
+            >
               <div style={{
                 fontFamily: C.fontDisplay,
                 fontWeight: 800,
